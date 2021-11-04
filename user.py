@@ -9,8 +9,8 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS users(
     password TEXT NOT NULL
 )""")
 
-class UserAdd():
-    """This function creates a new user and adds it to the database"""
+class Registration():
+    """This class creates a new user and adds it to the database"""
     def __init__(self, username, password):
         """Initializing function"""
         self.username = username
@@ -27,3 +27,22 @@ class UserAdd():
         db.commit()
 
         print(f'Пользователь зарегистрирован\nID: {last_id+1}\nИмя пользователя: {self.username}\nПароль: {self.password}')
+
+
+class Login():
+    def __init__(self, username, password):
+        """Initializing function"""
+        self.username = username
+        self.password = password
+
+
+class Delete():
+    def __init__(self, password):
+        """Initializing function"""
+        self.password = password
+
+        if cursor.execute("SELECT password FROM users WHERE password = (?)", (self.password,)).fetchone() is None:
+            print('Error! Password is invalid')
+        else:
+            cursor.execute("DELETE FROM users WHERE password = (?)", (self.password,))
+            db.commit()

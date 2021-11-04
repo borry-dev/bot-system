@@ -12,8 +12,8 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS bots(
     token TEXT NOT NULL
 )""")
 
-class BotAdd():
-    """This function creates a new bot and adds it to the database"""
+class Create():
+    """This class creates a new bot and adds it to the database"""
     def __init__(self, name, owner, prefix):
         """Initializing function"""
         self.name = name
@@ -34,8 +34,21 @@ class BotAdd():
         print(f'Бот создан\nИмя бота: {self.name}\nID: {last_id+1}\nАвтор бота: {self.owner}\nПрефикс бота: {self.prefix}\nТокен бота: {token}')
 
 
+class Delete():
+    """This class removes the bot"""
+    def __init__(self, token):
+        """Initializing function"""
+        self.token = token
+
+        if cursor.execute("SELECT token FROM bots WHERE token = (?)", (self.token,)).fetchone() is None:
+            print('Error! Token is invalid')
+        else:
+            cursor.execute("DELETE FROM bots WHERE token = (?)", (self.token,))
+            db.commit()
+
 
 class Run():
+    """This class launches the bot"""
     def __init__(self, token):
         """Initializing function"""
 
@@ -54,7 +67,7 @@ class Run():
             pass
         else:
             id = cursor.execute("SELECT id FROM bots WHERE token = (?)", (self.token,)).fetchone()[0]
-            print(id)
+            return id
 
 
     def name(self):
@@ -63,7 +76,7 @@ class Run():
             pass
         else:
             name = cursor.execute("SELECT name FROM bots WHERE token = (?)", (self.token,)).fetchone()[0]
-            print(name)
+            return name
 
 
     def owner(self):
@@ -72,7 +85,7 @@ class Run():
             pass
         else:
             owner = cursor.execute("SELECT owner FROM bots WHERE token = (?)", (self.token,)).fetchone()[0]
-            print(owner)
+            return owner
 
 
     def prefix(self):
@@ -81,4 +94,4 @@ class Run():
             pass
         else:
             prefix = cursor.execute("SELECT prefix FROM bots WHERE token = (?)", (self.token,)).fetchone()[0]
-            print(prefix)
+            return prefix
