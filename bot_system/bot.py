@@ -36,15 +36,19 @@ class Create():
 
 class Delete():
     """This class removes the bot"""
-    def __init__(self, token):
+    def __init__(self, id, token):
         """Initializing function"""
+        self.id = id
         self.token = token
 
-        if cursor.execute("SELECT token FROM bots WHERE token = (?)", (self.token,)).fetchone() is None:
-            print('Error! Token is invalid')
+        if cursor.execute("SELECT id FROM bots WHERE id = (?)", (self.id,)).fetchone() is None:
+            print('Error! ID is invalid')
         else:
-            cursor.execute("DELETE FROM bots WHERE token = (?)", (self.token,))
-            db.commit()
+            if cursor.execute("SELECT token FROM bots WHERE id = (?)", (self.id,)).fetchone()[0] == self.token:
+                cursor.execute("DELETE FROM bots WHERE id = (?)", (self.id,))
+                db.commit()
+            else:
+                print('Error! Token is invalid')
 
 
 class Run():

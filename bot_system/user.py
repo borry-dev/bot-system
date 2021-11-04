@@ -37,12 +37,17 @@ class Login():
 
 
 class Delete():
-    def __init__(self, password):
+    """This class removes the user"""
+    def __init__(self, id, password):
         """Initializing function"""
+        self.id = id
         self.password = password
 
-        if cursor.execute("SELECT password FROM users WHERE password = (?)", (self.password,)).fetchone() is None:
-            print('Error! Password is invalid')
+        if cursor.execute("SELECT id FROM users WHERE id = (?)", (self.id,)).fetchone() is None:
+            print('Error! ID is invalid')
         else:
-            cursor.execute("DELETE FROM users WHERE password = (?)", (self.password,))
-            db.commit()
+            if cursor.execute("SELECT password FROM users WHERE id = (?)", (self.id,)).fetchone()[0] == self.password:
+                cursor.execute("DELETE FROM users WHERE id = (?)", (self.id,))
+                db.commit()
+            else:
+                print('Error! Password is invalid')
