@@ -27,6 +27,3 @@ class UserAdd():
         db.commit()
 
         print(f'Пользователь зарегистрирован\nID: {last_id+1}\nИмя пользователя: {self.username}\nПароль: {self.password}')
-
-
-UserAdd('Borry', 'SecretPassword228')
