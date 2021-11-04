@@ -35,7 +35,7 @@ class BotAdd():
 
 
 
-class Login():
+class Run():
     def __init__(self, token):
         """Initializing function"""
 
@@ -45,32 +45,40 @@ class Login():
         if cursor.execute("SELECT token FROM bots WHERE token = (?)", (self.token,)).fetchone() is None:
             print('Error! Token is invalid')
         else:
-            id = cursor.execute("SELECT id FROM bots WHERE token = (?)", (self.token,)).fetchone()[0]
-            name = cursor.execute("SELECT name FROM bots WHERE token = (?)", (self.token,)).fetchone()[0]
-            owner = cursor.execute("SELECT owner FROM bots WHERE token = (?)", (self.token,)).fetchone()[0]
-            prefix = cursor.execute("SELECT prefix FROM bots WHERE token = (?)", (self.token,)).fetchone()[0]
-            print(f'Login success! ')
+            pass
 
 
     def id(self):
         """This function outputs the bot id"""
-        id = cursor.execute("SELECT id FROM bots WHERE token = (?)", (self.token,)).fetchone()[0]
-        print(id)
+        if cursor.execute("SELECT token FROM bots WHERE token = (?)", (self.token,)).fetchone() is None:
+            pass
+        else:
+            id = cursor.execute("SELECT id FROM bots WHERE token = (?)", (self.token,)).fetchone()[0]
+            print(id)
 
 
     def name(self):
         """This function outputs the name of the bot"""
-        name = cursor.execute("SELECT name FROM bots WHERE token = (?)", (self.token,)).fetchone()[0]
-        print(name)
+        if cursor.execute("SELECT token FROM bots WHERE token = (?)", (self.token,)).fetchone() is None:
+            pass
+        else:
+            name = cursor.execute("SELECT name FROM bots WHERE token = (?)", (self.token,)).fetchone()[0]
+            print(name)
 
 
     def owner(self):
         """This function outputs the owner of the bot"""
-        owner = cursor.execute("SELECT owner FROM bots WHERE token = (?)", (self.token,)).fetchone()[0]
-        print(owner)
+        if cursor.execute("SELECT token FROM bots WHERE token = (?)", (self.token,)).fetchone() is None:
+            pass
+        else:
+            owner = cursor.execute("SELECT owner FROM bots WHERE token = (?)", (self.token,)).fetchone()[0]
+            print(owner)
 
 
     def prefix(self):
         """This function outputs the bot prefix"""
-        prefix = cursor.execute("SELECT prefix FROM bots WHERE token = (?)", (self.token,)).fetchone()[0]
-        print(prefix)
+        if cursor.execute("SELECT token FROM bots WHERE token = (?)", (self.token,)).fetchone() is None:
+            pass
+        else:
+            prefix = cursor.execute("SELECT prefix FROM bots WHERE token = (?)", (self.token,)).fetchone()[0]
+            print(prefix)
